@@ -15,9 +15,10 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Products::get();
+        $products = Products::paginate(10);
+        $paginator = $products;
 
-        return view('welcome', compact(['products']));
+        return view('welcome', compact(['products', 'paginator']));
     }
 
     /**
@@ -64,7 +65,8 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Products::findOrFail($id);
+        return view('crud.show', compact('product'));
     }
 
     /**
@@ -88,22 +90,16 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $product = Products::where('id', $id);
+        $product = Products::findOrFail($id);
 
-        $update = $product->update([
-            'ProductName' => $request->ProductName,
-            'ProductPrice' => $request->ProductPrice,
-            'ProductDescription' => $request->ProductDescription,
-            'ProductQuantity' => $request->ProductQuantity,
-            // 'ProductImage' => $request->pimage,
-            'ProductSlug' => $request->ProductSlug,
-        ]);
-
-        if($update) {
-            return redirect(route('products'))->with('success', 'Product Updated!');
-        }else{
-            return back()->with('error', 'Product Not Updated!');
-        }
+        $product->ProductName = $request->ProductName;
+        $product->ProductPrice = $request->ProductPrice;
+        $product->ProductDescription = $request->ProductDescription;
+        $product->ProductQuantity = $request->ProductQuantity;
+        $product->ProductSlug = $request->ProductSlug;
+        $product->save();
+        return redirect(route('welcome'))->with('success', 'Updated');
+        
     }
 
     /**
@@ -114,6 +110,7 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Products::findOrFail($id)->delete();
+        return back();
     }
 }

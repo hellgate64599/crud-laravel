@@ -10768,3 +10768,33 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.pagination .page-item.active .page-link {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.pagination .page-item:not(.disabled):not(.active) .page-link:hover {
+  background-color: #f8f9fa;
+  border-color: #dee2e6;
+}
+
+.pagination .page-link {
+  font-size: 14px;
+}
+
+.pagination .page-item:not(:first-child) .page-link {
+  margin-left: 5px;
+}
+
+.pagination {
+  justify-content: center;
+}
+
+.pagination .page-link {
+  font-size: 1rem;
+}
+
+.page-link {
+  width: 0.8em !important;
+  height: 0.8em !important;
+}

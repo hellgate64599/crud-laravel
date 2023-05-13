@@ -4,7 +4,9 @@ use App\Http\Controllers\Products\ProductsController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', [App\Http\Controllers\Products\ProductsController::class, 'index']);
+Route::get('/', [App\Http\Controllers\Products\ProductsController::class, 'index'])->name('welcome');
+
+
 
 Route::resource('products', ProductsController::class);
 
